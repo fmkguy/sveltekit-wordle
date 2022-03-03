@@ -3,7 +3,7 @@
 
   export let validations = [];
 
-  function getEmojiFromState(state: LETTER_GUESS_STATES): string {
+  function getEmojiFromState(state) {
   	switch (state) {
   		case LETTER_GUESS_STATES.present:
   			return '🟨';
@@ -14,10 +14,8 @@
   	}
   }
 
-  function printRow(row: []): string {
-  	return row
-  		.map(({ state: LETTER_GUESS_STATES }) => getEmojiFromState(state))
-  		.join('');
+  function printRow(row) {
+  	return row.map(({ state }) => getEmojiFromState(state)).join('');
   }
 </script>
 
