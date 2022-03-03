@@ -14,14 +14,17 @@
   	}
   }
 
-  function printRow(row: string[]): string {
-  	return row.map(({ state }) => getEmojiFromState(state)).join('');
+  function printRow(row: []): string {
+  	return row
+  		.map(({ state: LETTER_GUESS_STATES }) => getEmojiFromState(state))
+  		.join('');
   }
 </script>
 
 <style scoped>
   .summary {
   	font-weight: 300;
+  	line-height: 1em;
   	margin: 1rem auto 2rem auto;
   }
 </style>

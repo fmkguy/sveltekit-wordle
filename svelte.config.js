@@ -8,15 +8,15 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter()
-	},
+		adapter: adapter(),
 
-	vite: {
-		server: {
-			strictPort: true,
-			port: 3000,
-			hmr: {
-				port: 443
+		vite: {
+			server: {
+				strictPort: true,
+				port: 3000,
+				hrm: {
+					port: 443
+				}
 			}
 		}
 	}

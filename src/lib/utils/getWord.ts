@@ -1,21 +1,39 @@
-// from https://github.com/tabatkins/wordle-list
-const wordsListUrl: string = `https://raw.githubusercontent.com/tabatkins/wordle-list/main/words`;
+// from https://github.com/seanpatlan/wordle-words
+const wordListUrl: string = `https://raw.githubusercontent.com/seanpatlan/wordle-words/main/word-bank.csv`;
+const wordPoolUrl: string = `https://raw.githubusercontent.com/seanpatlan/wordle-words/main/valid-words.csv`;
 
-// list comes sorted and re-sorted by @tabatkins on github
-const getWordList = async () => {
-	return await fetch(wordsListUrl)
-		.then((res) => res.text())
-		.then((data) => data.split(/\r?\n/))
-		.catch((err) => console.error(err));
+let list: void | string[]; // choose word from this list
+let pool: void | string[]; // check words against this total words pool
+
+(async function main() {
+	// list comes sorted and re-sorted by @tabatkins on github
+	const getWordList = async () => {
+		return await fetch(wordListUrl)
+			.then((res) => res.text())
+			.then((data) => data.split(/\r?\n/))
+			.catch((err) => console.error(err));
+	};
+
+	const getWordPool = async () => {
+		return await fetch(wordPoolUrl)
+			.then((res) => res.text())
+			.then((data) => data.split(/\r?\n/))
+			.catch((err) => console.error(err));
+	};
+
+	list = await getWordList();
+	pool = await getWordPool();
+})();
+
+export const getWord = () => {
+	if (list) {
+		const selectedWordIndex = Math.floor(Math.random() * list.length) || 0;
+		return list[selectedWordIndex];
+	}
 };
 
-export const getWord = async () => {
-	const list = await getWordList();
-	const selectedWordIndex = Math.floor(Math.random() * list.length) || 0;
-	return list[selectedWordIndex];
-};
-
-export const checkWord = async (word: string) => {
-	const list = await getWordList();
-	return !!list.find((n) => n === word);
+export const checkWord = (word: string) => {
+	if (pool) {
+		return !!pool.find((n) => n === word);
+	}
 };

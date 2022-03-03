@@ -1,7 +1,7 @@
 import { LETTER_GUESS_STATES } from '$lib/utils/constants';
 import { validationsMap } from '$lib/stores/store';
 
-interface validationType {
+export interface validationType {
 	letter: string;
 	state: LETTER_GUESS_STATES;
 }
@@ -22,13 +22,12 @@ export default function validateGuess(
 	const guessMap = guessArr.reduce((guesses, letter, i) => {
 		if (!guesses[letter]) {
 			guesses[letter] = {
-				count: 1,
 				present: !!answerLettersCountMap[letter],
-				presentIndices: [i],
+				presentIndices: [],
 				correctIndices: []
 			};
-		} else {
-			guesses[letter].count = guesses[letter].count + 1;
+		}
+		if (guesses[letter].present) {
 			guesses[letter].presentIndices.push(i);
 		}
 		if (letter === answer[i]) {
@@ -44,10 +43,11 @@ export default function validateGuess(
 
 		if (guessedLetter.present) {
 			// present but in wrong position
-			// * should only change state for first found instance
-			// * if > 1 instance in guess but only 1 instance in answer
-			//    and second instance is CORRECT, mark "notPresent"
-			if (letter !== answer[i]) {
+			if (
+				letter !== answer[i] &&
+				guessedLetter.presentIndices[0] === i &&
+				guessedLetter.correctIndices.length <= 0
+			) {
 				state = LETTER_GUESS_STATES.present;
 			}
 			// CORRECT!
