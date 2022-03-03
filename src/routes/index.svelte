@@ -225,6 +225,11 @@
   }
 </style>
 
+<svelte:head>
+	<title>WordGame - Built on SvelteKit</title>
+	<meta name="description" content="Tiny Wordle clone built on SvelteKit (with TS and SCSS)">
+</svelte:head>
+
 <main>
   <h1>📖 WordGame<small>™️</small></h1>
 
