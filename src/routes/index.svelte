@@ -132,6 +132,7 @@
   			)
   		) {
   			await handleWinningEvent();
+  			return;
   		}
 
   		guess.set('');
@@ -269,5 +270,5 @@
     {#if showOverlay}
       <div class="overlay"></div>
     {/if}
-  {/if}
+	{/if}
 </main>

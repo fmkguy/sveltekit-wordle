@@ -7,8 +7,8 @@ interface validationType {
 }
 
 export default function validateGuess(
-	guess: String,
-	answer: String
+	guess: string,
+	answer: string
 ): Array<any> {
 	let validation: validationType[] = [];
 	const guessArr = guess.split('');
