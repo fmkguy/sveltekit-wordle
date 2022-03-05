@@ -22,7 +22,7 @@
 <style scoped>
   .summary {
   	font-weight: 300;
-  	line-height: 1em;
+  	line-height: 1.3em;
   	margin: 1rem auto 2rem auto;
   }
 </style>

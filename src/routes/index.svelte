@@ -33,6 +33,7 @@
 
  onMount(() => {
  	window.addEventListener('keyup', handleKeyPress);
+ 	input.focus();
 
  	return () => {
  		window.removeEventListener('keyup', handleKeyPress);
@@ -91,7 +92,7 @@
  		let pressedKey;
 
  		if (e.code === 'Backspace') {
- 			guess.update(g => g.slice(0, -1));
+ 			handleBackspace();
  		}
 
  		if (['Enter', 'NumpadEnter'].includes(e.code)) {
@@ -110,6 +111,10 @@
  			guess.update(g => g + pressedKey);
  		}
  	}
+ };
+
+ export const handleBackspace = () => {
+ 	guess.update(g => g.slice(0, -1));
  };
 
  export const handleGuess = async () => {
@@ -164,8 +169,12 @@
  	font-family: sans-serif;
  	margin: 0 auto;
  	max-width: 32rem;
- 	padding: 1rem;
+ 	padding: 1rem 0.5rem;
  	text-align: center;
+
+ 	@media only screen and (min-width: 640px) {
+ 		padding: 1rem;
+ 	}
  }
 
  h1 {
@@ -233,6 +242,13 @@
  	width: 100%;
  	z-index: 1000;
  }
+
+ form {
+ 	height: 0;
+ 	opacity: 0;
+ 	position: absolute;
+ 	width: 0;
+ }
 </style>
 
 <svelte:head>
@@ -257,8 +273,12 @@
   {/if}
 
   {#if $answer && typeof $answer === 'string'}
-    <KeyLegend />
+    <KeyLegend {handleBackspace} {handleGuess} />
     <p>Using your keyboard, type out your word one guess at a time. When you&rsquo;re ready to guess, just hit <code>ENTER</code> to submit your guess!</p>
+
+		<form on:submit|preventDefault={() => {}}>
+			<input type="text" name="guess" bind:this={input} bind:value={$guess} />
+		</form>
 
     {#each Array(TRY_COUNT) as _, i}
       <WordRow

@@ -18,7 +18,7 @@
   	display: flex;
   	justify-content: space-between;
   	margin: 0 auto 0.05rem;
-  	max-width: 26rem;
+  	max-width: 27rem;
   	padding: 0.3rem;
   	width: 100%;
 
